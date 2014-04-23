@@ -9,8 +9,24 @@ and open the template in the editor.
         <title>TODO supply a title</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width">
+        <script type="text/javascript" src="js/libs/jquery/jquery.js"></script>
+        <script type="text/javascript" src="js/grid.js"></script>
+        <script type="text/javascript" src="js/canvas.js"></script>
+        <script>
+            $(document).ready(function() {
+                var ctx = initCanvas('game-view', '2d');
+                if (ctx !== null) {
+                    var grid = new Grid(ctx, [640, 480]);
+                    grid.draw();
+                    grid.insert([20, 31], "red");
+                    grid.insert([20, 32], "green");
+                } else {
+                    console.log("HTML5 Canvas not supported by the browser");
+                }
+            });
+        </script>
     </head>
     <body>
-        <div>TODO write content</div>
+        <canvas id="game-view" width="640" height="480" style="border: solid 1px;"></canvas>
     </body>
 </html>
