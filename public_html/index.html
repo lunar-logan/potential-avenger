@@ -12,14 +12,40 @@ and open the template in the editor.
         <script type="text/javascript" src="js/libs/jquery/jquery.js"></script>
         <script type="text/javascript" src="js/grid.js"></script>
         <script type="text/javascript" src="js/canvas.js"></script>
+        <script type="text/javascript" src="js/engine.js">
+        </script>
+        <script type="text/javascript" src="js/map.js"></script>
         <script>
             $(document).ready(function() {
                 var ctx = initCanvas('game-view', '2d');
                 if (ctx !== null) {
                     var grid = new Grid(ctx, [640, 480]);
-                    grid.draw();
-                    grid.insert([20, 31], "red");
-                    grid.insert([20, 32], "green");
+                    var matrixMap = new Matrix(64, 48);
+                    var map = new Map();
+                    map.matrixMap = matrixMap;
+//                    matrixMap.set(0, 41, 4);
+                    var engine = new Engine(function() {
+                        grid.redraw();
+                        map.draw(grid, matrixMap);
+                        updatePosition();
+                    }, 50);
+                    engine.react();
+
+                    function updatePosition() {
+                        for(var i=0; i<map.renderables.length; ++i) {
+                            map.renderables[i].move(1);
+                        }
+                    }
+                    var goId = 1;
+                    window.setInterval(function() {
+                        //This function generates obstacles
+                        var col = matrixMap.nrows;
+                        var rcol = (Math.round((Math.random() * 1000)) % col);
+                        var go = new GameObject(goId, rcol, 0, "green");
+                        map.addGameObject(go);
+                        goId++;
+
+                    }, 100);
                 } else {
                     console.log("HTML5 Canvas not supported by the browser");
                 }

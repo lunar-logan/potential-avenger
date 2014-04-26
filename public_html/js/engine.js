@@ -13,7 +13,7 @@ function Engine(gameLoop, refreshTime) {
     this.gameLoop = null;
     if (gameLoop !== undefined)
         this.gameLoop = gameLoop;
-
+    
     this.react = function() {
         console.log("MayaFx engine is begining to react");
         if (this.gameLoop !== null) {

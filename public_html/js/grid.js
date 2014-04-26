@@ -19,6 +19,10 @@ function Grid(ctx, size, deltaX, deltaY) {
     this.clear = function() {
         this.ctx.clearRect(0, 0, this.size[0], this.size[1]);
     };
+    this.redraw = function() {
+        this.clear();
+        this.draw();
+    }
     this.draw = function() {
         var ctx = this.ctx;
         var nx = this.size[0] / this.deltaX;
